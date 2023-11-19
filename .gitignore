@@ -1,0 +1,4 @@
+.cache/clangd/index
+.cmake/api/v1/reply
+build
+vcpkg
