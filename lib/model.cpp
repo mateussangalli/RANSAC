@@ -12,6 +12,8 @@ LinearModel::LinearModel(int dim_in, int dim_out) {
     coefficients.setOnes();
 }
 
+// Solves a least squares problem using SVD decomposition.
+// Details are handled by the Eigen library.
 Eigen::VectorXf SolveLeastSquares(Eigen::MatrixXf input_data, const Eigen::VectorXf &output) {
     input_data.conservativeResize(input_data.rows(), input_data.cols() + 1);
     input_data.col(input_data.cols()-1).setOnes();
@@ -19,19 +21,20 @@ Eigen::VectorXf SolveLeastSquares(Eigen::MatrixXf input_data, const Eigen::Vecto
     return input_data.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(output);
 }
 
+// computes the square erro between two vectors.
 float SquareError(Eigen::VectorXf vec1, Eigen::VectorXf vec2) {
     return (vec1 - vec2).squaredNorm();
 }
 
 
-void LinearModel::Fit(Eigen::MatrixXf &data) {
+void LinearModel::fit(const Eigen::MatrixXf & data) {
     for (int i=0; i < dim_out; i++) {
         Eigen::VectorXf row = SolveLeastSquares(data.block(0, 0, data.rows(), dim_in), data.col(dim_in + i));
         coefficients.row(i) << row.transpose();
     }
 }
 
-Eigen::VectorXf LinearModel::Errors(Eigen::MatrixXf &data) {
+Eigen::VectorXf LinearModel::errors(const Eigen::MatrixXf & data) {
     Eigen::MatrixXf input_data = data.block(0, 0, data.rows(), dim_in); 
     Eigen::MatrixXf output_data = data.block(0, dim_in, data.rows(), dim_out); 
 
@@ -52,6 +55,7 @@ Eigen::VectorXf LinearModel::Errors(Eigen::MatrixXf &data) {
 }
 
 
-std::unique_ptr<ModelInterface> LinearModel::Clone() const {
-    return std::make_unique<LinearModel>(dim_in, dim_out);
+std::unique_ptr<ModelInterface> LinearModel::clone() const {
+    std::unique_ptr<LinearModel> model = std::make_unique<LinearModel>(dim_in, dim_out);
+    return model;
 }
