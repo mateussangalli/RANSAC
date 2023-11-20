@@ -16,10 +16,13 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_library(EstimatorRANSAC lib/ransac.cpp)
 add_library(Model lib/model.cpp)
-add_executable(LinearExample examples/linear_example.cpp)
+add_executable(ExampleLinear examples/linear_example.cpp)
 add_executable(TestLinearModel tests/test_linear_model.cpp)
 
 find_package(Eigen3 CONFIG REQUIRED)
-target_link_libraries(EstimatorRANSAC PRIVATE Eigen3::Eigen)
-target_link_libraries(Model PRIVATE Eigen3::Eigen)
+find_package(Matplot++ CONFIG REQUIRED)
+
+target_link_libraries(Model Eigen3::Eigen)
+target_link_libraries(EstimatorRANSAC Model Eigen3::Eigen)
 target_link_libraries(TestLinearModel Model Eigen3::Eigen)
+target_link_libraries(ExampleLinear EstimatorRANSAC Model Eigen3::Eigen Matplot++::matplot)
