@@ -49,7 +49,7 @@ vector<double> toDoubleVector(Eigen::MatrixXf data) {
     return out;
 }
 
-// Plots the inliers and outliers
+// Displays the inliers and outliers
 void plotResults(Eigen::MatrixXf inliers, Eigen::MatrixXf outliers) {
     using namespace matplot;
     auto f = figure(false);
@@ -61,9 +61,11 @@ void plotResults(Eigen::MatrixXf inliers, Eigen::MatrixXf outliers) {
     auto outliers_x = toDoubleVector(outliers.col(0));
     auto outliers_y = toDoubleVector(outliers.col(1));
 
-    scatter(points_x, points_y, vector<double>{});
+    auto ax = scatter(points_x, points_y);
     hold(on);
-    scatter(outliers_x, outliers_y, vector<double>{});
+    scatter(outliers_x, outliers_y);
+
+    matplot::legend({"Inliers", "Outliers"});
 
     show();
 
