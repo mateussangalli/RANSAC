@@ -11,13 +11,13 @@ void test_fit() {
     Eigen::MatrixXf data(2, 2);
     data << 0, 1, 1, 2;
 
-    LinearModel model = LinearModel(1, 1);
+    LinearModel model(1, 1);
     
-    model.Fit(data);
+    model.fit(data);
     
     Eigen::MatrixXf test_data(3, 2);
     test_data << 0, 1, 1, 2, 3, 4;
-    float sum_errors = model.Errors(data).sum();
+    float sum_errors = model.errors(test_data).sum();
     
     IS_TRUE(sum_errors < 0.001f);
 }
