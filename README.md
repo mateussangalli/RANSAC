@@ -6,11 +6,10 @@ Dependencies: Eigen and matplot++
 Used [vcpkg](https://github.com/microsoft/vcpkg) to manage the dependencies.
 The dependencies can be installed with
 
-`
-./vcpkg install Eigen
-./vcpkg install matplotplusplut
-`
+`./vcpkg install Eigen`
+and
+`./vcpkg install matplotplusplus`
 
-And the project can be built with `cd build && cmake .. && make`.
+The project can be built with `cd build && cmake .. && make`.
 
 To run the example with the linear model run ExampleLinear in the build directory.
