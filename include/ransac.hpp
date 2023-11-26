@@ -12,8 +12,8 @@
  */
 class EstimatorRANSAC {
   public:
-    EstimatorRANSAC(std::unique_ptr<ModelInterface> &model,
-                    std::unique_ptr<Eigen::MatrixXf> &data, int num_iter,
+    explicit EstimatorRANSAC(std::unique_ptr<ModelInterface> model,
+                    std::unique_ptr<Eigen::MatrixXf> data, int num_iter,
                     int num_samples, float tolerance, int min_inliers);
 
     ~EstimatorRANSAC() = default;

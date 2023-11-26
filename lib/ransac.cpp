@@ -28,14 +28,14 @@ Eigen::MatrixXf gatherRows(const Eigen::MatrixXf & data, std::vector<int> indice
     return out;
 }
 
-EstimatorRANSAC::EstimatorRANSAC(std::unique_ptr<ModelInterface> & model,
-                                 std::unique_ptr<Eigen::MatrixXf> & data,
+EstimatorRANSAC::EstimatorRANSAC(std::unique_ptr<ModelInterface> model,
+                                 std::unique_ptr<Eigen::MatrixXf> data,
                                  int num_iter,
                                  int num_samples,
                                  float tolerance,
                                  int min_inliers) {
-    this->model.swap(model);
-    this->data.swap(data);
+    this->model = std::move(model);
+    this->data = std::move(data);
     this->num_iter = num_iter;
     this->tolerance = tolerance;
     this->min_inliers = min_inliers;

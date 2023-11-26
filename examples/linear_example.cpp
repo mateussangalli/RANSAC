@@ -79,7 +79,7 @@ int main() {
     std::unique_ptr<ModelInterface> model = make_unique<LinearModel>(1, 1);
 
     // define the RANSAC model
-    EstimatorRANSAC estimator_ransac(model, data, NUM_ITER, NUM_SAMPLES, TOLERANCE, MIN_INLIER);
+    EstimatorRANSAC estimator_ransac(std::move(model), std::move(data), NUM_ITER, NUM_SAMPLES, TOLERANCE, MIN_INLIER);
     estimator_ransac.fit();
 
     // get the inliers and outliers for displaying
